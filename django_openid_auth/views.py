@@ -198,16 +198,15 @@ def login_begin(request, template_name='openid/login.html',
     # for attribute exchange, use that.
     endpoint = openid_request.endpoint
     if endpoint.supportsType(ax.AXMessage.ns_uri):
-        fetch_request = ax.FetchRequest()
+        fetch_request = ax.CustomFetchRequest()
         # We mark all the attributes as required, since Google ignores
         # optional attributes.  We request both the full name and
         # first/last components since some providers offer one but not
         # the other.
         for (attr, alias) in [
-                ('http://axschema.org/contact/email', 'email'),
-                ('http://axschema.org/namePerson', 'fullname'),
-                ('http://axschema.org/namePerson/first', 'firstname'),
-                ('http://axschema.org/namePerson/last', 'lastname'),
+                ('email', 'alias4'),
+                ('first', 'alias2'),
+                ('last', 'alias3'),
                 ('http://axschema.org/namePerson/friendly', 'nickname'),
                 # The myOpenID provider advertises AX support, but uses
                 # attribute names from an obsolete draft of the
@@ -232,10 +231,10 @@ def login_begin(request, template_name='openid/login.html',
 
         openid_request.addExtension(fetch_request)
     else:
-        sreg_required_fields = []
+        sreg_required_fields = ['email']
         sreg_required_fields.extend(
             getattr(settings, 'OPENID_SREG_REQUIRED_FIELDS', []))
-        sreg_optional_fields = ['email', 'fullname', 'nickname']
+        sreg_optional_fields = ['fullname', 'nickname']
         sreg_optional_fields.extend(
             getattr(settings, 'OPENID_SREG_EXTRA_FIELDS', []))
         sreg_optional_fields = [
