@@ -183,23 +183,14 @@ class OpenIDBackend(object):
             # attribute names from an obsolete draft of the
             # specification.  We check for them first so the common
             # names take precedence.
-            email = fetch_response.getSingle(
-                'http://schema.openid.net/contact/email', email)
+            email = fetch_response.getSingle('email', email)
             fullname = fetch_response.getSingle(
                 'http://schema.openid.net/namePerson', fullname)
             nickname = fetch_response.getSingle(
                 'http://schema.openid.net/namePerson/friendly', nickname)
 
-            email = fetch_response.getSingle(
-                'http://axschema.org/contact/email', email)
-            fullname = fetch_response.getSingle(
-                'http://axschema.org/namePerson', fullname)
-            first_name = fetch_response.getSingle(
-                'http://axschema.org/namePerson/first', first_name)
-            last_name = fetch_response.getSingle(
-                'http://axschema.org/namePerson/last', last_name)
-            nickname = fetch_response.getSingle(
-                'http://axschema.org/namePerson/friendly', nickname)
+            first_name = fetch_response.getSingle('first', first_name)
+            last_name = fetch_response.getSingle('last', last_name)
             verified = fetch_response.getSingle(
                 'http://ns.login.ubuntu.com/2013/validation/account', verified)
 
