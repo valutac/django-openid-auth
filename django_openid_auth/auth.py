@@ -168,7 +168,7 @@ class OpenIDBackend(object):
         return user
 
     def _extract_user_details(self, openid_response):
-        email = fullname = first_name = last_name = nickname = specialty = country = profession = None
+        email = fullname = first_name = last_name = nickname = specialty = country = profession = profilepicture = None
         verified = 'no'
         sreg_response = sreg.SRegResponse.fromSuccessResponse(openid_response)
         if sreg_response:
@@ -187,6 +187,7 @@ class OpenIDBackend(object):
             specialty = fetch_response.getSingle('specialty', specialty)
             country = fetch_response.getSingle('country', country)
             profession = fetch_response.getSingle('profession', profession)
+            profilepicture = fetch_response.getSingle('profilepicture', profilepicture)
             fullname = fetch_response.getSingle(
                 'http://schema.openid.net/namePerson', fullname)
             nickname = fetch_response.getSingle(
@@ -217,7 +218,7 @@ class OpenIDBackend(object):
 
         return dict(email=email, nickname=nickname, account_verified=verified,
                     first_name=first_name, last_name=last_name, specialty=specialty,
-                    country=country, profession=profession)
+                    country=country, profession=profession, profilepicture=profilepicture)
 
     def _get_preferred_username(self, nickname, email):
         if nickname:

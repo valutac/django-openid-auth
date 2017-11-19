@@ -210,6 +210,7 @@ def login_begin(request, template_name='openid/login.html',
                 ('specialty', 'alias9'),
                 ('country', 'alias5'),
                 ('profession', 'alias7'),
+                ('profilepicture', 'alias6'),
                 ('http://axschema.org/namePerson/friendly', 'nickname'),
                 # The myOpenID provider advertises AX support, but uses
                 # attribute names from an obsolete draft of the
