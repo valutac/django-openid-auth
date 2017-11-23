@@ -43,7 +43,7 @@ from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http.request import QueryDict
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.template.loader import render_to_string
 try:
@@ -162,6 +162,11 @@ def login_begin(request, template_name='openid/login.html',
                 render_failure=default_render_failure,
                 redirect_field_name=REDIRECT_FIELD_NAME):
     """Begin an OpenID login request, possibly asking for an identity URL."""
+    
+    # If already logged in, don't do openid login
+    if request.user.is_authenticated():
+        return redirect('/')
+
     data = get_request_data(request)
     redirect_to = data.get(redirect_field_name, '')
 
